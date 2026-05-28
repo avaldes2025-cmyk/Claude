@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>V/IV — Camisetas Premium</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ── TOKENS ────────────────────────────────────────────────── */
+    :root {
+      --black:        #0a0a0a;
+      --wine:         #6B1E2E;
+      --wine-dark:    #4a1520;
+      --wine-light:   #8a3040;
+      --white:        #ffffff;
+      --off-white:    #faf8f6;
+      --grey-light:   #f2efec;
+      --grey-mid:     #e4dfd9;
+      --grey-text:    #6b6560;
+      --grey-muted:   #a09890;
+
+      --serif:  'Cormorant Garamond', Georgia, serif;
+      --sans:   -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+      --r-sm: 2px; --r-md: 4px; --r-lg: 8px; --r-full: 9999px;
+      --sh-sm: 0 1px 4px rgba(0,0,0,.06);
+      --sh-md: 0 4px 20px rgba(0,0,0,.10);
+      --sh-lg: 0 12px 40px rgba(0,0,0,.18);
+    }
+
+    /* ── RESET ─────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { font-family: var(--sans); color: var(--black); background: var(--white); overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button { cursor: pointer; border: none; background: none; font-family: var(--sans); }
+    input { font-family: var(--sans); }
+    .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+
+    /* ── CONTAINER ─────────────────────────────────────────────── */
+    .container { width: 100%; max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── BUTTONS ───────────────────────────────────────────────── */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      min-height: 44px; padding: 0 28px;
+      font-size: .75rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
+      border: 1px solid transparent; border-radius: var(--r-sm);
+      transition: background .2s, color .2s, border-color .2s, transform .15s;
+    }
+    .btn:focus-visible { outline: 2px solid var(--wine); outline-offset: 3px; }
+    .btn:active { transform: scale(.98); }
+    .btn-black  { background: var(--black); color: var(--white); border-color: var(--black); }
+    .btn-black:hover { background: #2a2a2a; border-color: #2a2a2a; }
+    .btn-wine   { background: var(--wine); color: var(--white); border-color: var(--wine); }
+    .btn-wine:hover { background: var(--wine-dark); border-color: var(--wine-dark); }
+    .btn-outline{ background: transparent; color: var(--black); border-color: var(--black); }
+    .btn-outline:hover { background: var(--black); color: var(--white); }
+    .btn-outline-w { background: transparent; color: var(--white); border-color: rgba(255,255,255,.45); }
+    .btn-outline-w:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.8); }
+    .btn-ghost  { background: transparent; color: var(--grey-text); }
+    .btn-ghost:hover { background: var(--grey-light); color: var(--black); }
+    .btn-lg { min-height: 52px; padding: 0 40px; }
+    .btn-full { width: 100%; }
+    .btn-icon { min-width: 44px; min-height: 44px; padding: 0; display: inline-flex; align-items: center; justify-content: center; position: relative; border-radius: var(--r-sm); }
+    .btn-icon:focus-visible { outline: 2px solid var(--wine); outline-offset: 3px; }
+
+    /* ── TICKER ────────────────────────────────────────────────── */
+    .ticker {
+      background: var(--black); color: var(--white); height: 40px;
+      overflow: hidden; position: relative;
+    }
+    .ticker::before, .ticker::after {
+      content: ''; position: absolute; top: 0; bottom: 0; width: 60px; z-index: 2; pointer-events: none;
+    }
+    .ticker::before { left: 0; background: linear-gradient(90deg, var(--black), transparent); }
+    .ticker::after  { right: 0; background: linear-gradient(-90deg, var(--black), transparent); }
+    .ticker__track {
+      display: flex; align-items: center; height: 100%;
+      width: max-content; animation: tick 32s linear infinite;
+    }
+    .ticker__track:hover { animation-play-state: paused; }
+    .ticker__item {
+      font-family: var(--serif); font-size: 1rem; font-weight: 400;
+      white-space: nowrap; padding: 0 28px; display: flex; align-items: center; gap: 28px;
+    }
+    .ticker__dot { color: var(--wine); font-size: 1.1em; }
+    @keyframes tick { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ── HEADER ────────────────────────────────────────────────── */
+    .header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,.95); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--grey-mid);
+    }
+    .header__inner { display: flex; align-items: center; height: 68px; gap: 24px; }
+    .logo {
+      font-family: var(--serif); font-size: 1.9rem; font-weight: 300;
+      color: var(--black); letter-spacing: .03em; line-height: 1; flex-shrink: 0;
+    }
+    .main-nav { flex: 1; }
+    .main-nav ul { display: flex; gap: 2px; }
+    .main-nav a {
+      height: 44px; padding: 0 14px; display: flex; align-items: center;
+      font-size: .7rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--grey-text); border-radius: var(--r-sm); transition: color .15s, background .15s;
+    }
+    .main-nav a:hover { color: var(--black); background: var(--grey-light); }
+    .main-nav a:focus-visible { outline: 2px solid var(--wine); }
+    .header__actions { display: flex; align-items: center; gap: 6px; margin-left: auto; }
+    .cart-count {
+      position: absolute; top: 3px; right: 3px;
+      background: var(--wine); color: var(--white);
+      font-size: 9px; font-weight: 700; width: 15px; height: 15px;
+      border-radius: var(--r-full); display: flex; align-items: center; justify-content: center;
+      pointer-events: none;
+    }
+    .cart-count.hidden { display: none; }
+    .mobile-menu-btn { display: none; }
+
+    /* ── HERO ──────────────────────────────────────────────────── */
+    .hero { background: var(--black); color: var(--white); overflow: hidden; }
+    .hero__inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      min-height: 600px; gap: 0;
+    }
+    .hero__content {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 72px 56px 72px 0;
+      position: relative; z-index: 1;
+    }
+    .hero__eyebrow {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 28px;
+    }
+    .hero__eyebrow-line { width: 28px; height: 1px; background: var(--wine); }
+    .hero__eyebrow span { font-size: .65rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.5); }
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 5vw, 5rem);
+      font-weight: 300; line-height: 1.05; letter-spacing: -.02em; margin-bottom: 20px;
+    }
+    .hero h1 em { font-style: italic; color: var(--wine-light); }
+    .hero__desc { font-size: 1rem; color: rgba(255,255,255,.5); line-height: 1.75; max-width: 360px; margin-bottom: 40px; }
+    .hero__ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    /* ── MODEL PLACEHOLDER ─────────────────────────────────────── */
+    .hero__photo {
+      position: relative; overflow: hidden;
+      background: #111;
+      min-height: 600px;
+    }
+    .model-placeholder {
+      width: 100%; height: 100%; min-height: 600px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+      border: 2px dashed rgba(255,255,255,.15);
+      color: rgba(255,255,255,.3);
+      transition: border-color .2s, color .2s;
+      cursor: default;
+      /* Replace this div's content with <img src="tu-foto.jpg" alt="Modelo V/IV"> */
+    }
+    .model-placeholder:hover { border-color: rgba(255,255,255,.3); color: rgba(255,255,255,.5); }
+    .model-placeholder svg { opacity: .5; }
+    .model-placeholder__title { font-family: var(--serif); font-size: 1.4rem; font-weight: 300; }
+    .model-placeholder__sub { font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; opacity: .6; text-align: center; max-width: 200px; line-height: 1.6; }
+
+    /* ── WINE TICKER DIVIDER ───────────────────────────────────── */
+    .wine-ticker {
+      background: var(--wine); height: 42px; overflow: hidden; position: relative;
+    }
+    .wine-ticker::before { left: 0; background: linear-gradient(90deg, var(--wine), transparent); }
+    .wine-ticker::after  { right: 0; background: linear-gradient(-90deg, var(--wine), transparent); }
+    .wine-ticker::before, .wine-ticker::after {
+      content: ''; position: absolute; top: 0; bottom: 0; width: 60px; z-index: 2; pointer-events: none;
+    }
+    .wine-ticker .ticker__track { animation-duration: 22s; }
+    .wine-ticker .ticker__item {
+      color: var(--white); font-size: .8rem; letter-spacing: .1em; text-transform: uppercase;
+      gap: 20px;
+    }
+    .wine-ticker .ticker__dot { color: rgba(255,255,255,.45); }
+
+    /* ── SECTION SHARED ────────────────────────────────────────── */
+    .section { padding: 88px 0; }
+    .section-alt { background: var(--off-white); }
+    .section-black { background: var(--black); color: var(--white); }
+    .section-header { margin-bottom: 48px; }
+    .section-header--center { text-align: center; }
+    .section-eyebrow {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+    }
+    .section-eyebrow--center { justify-content: center; }
+    .section-eyebrow-line { width: 24px; height: 1px; background: var(--wine); flex-shrink: 0; }
+    .section-eyebrow span { font-size: .65rem; letter-spacing: .18em; text-transform: uppercase; color: var(--wine); }
+    .section-header h2 {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      font-weight: 300; letter-spacing: -.01em; line-height: 1.1;
+    }
+    .section-header p { margin-top: 10px; color: var(--grey-text); font-size: 1rem; max-width: 480px; }
+    .section-header--center p { margin-left: auto; margin-right: auto; }
+
+    /* ── COLLECTIONS GRID ──────────────────────────────────────── */
+    .collections__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .coll-card {
+      position: relative; overflow: hidden; aspect-ratio: 2/3;
+      display: flex; align-items: flex-end; padding: 20px;
+      border-radius: var(--r-md);
+      transition: transform .3s cubic-bezier(.4,0,.2,1);
+    }
+    .coll-card:hover { transform: scale(1.02); }
+    .coll-card:focus-visible { outline: 2px solid var(--wine); outline-offset: 3px; }
+    .coll-card__bg { position: absolute; inset: 0; transition: transform .4s; }
+    .coll-card:hover .coll-card__bg { transform: scale(1.06); }
+    .coll-card__overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,.75) 0%, rgba(0,0,0,.1) 55%, transparent);
+    }
+    .coll-card__content { position: relative; z-index: 1; color: var(--white); }
+    .coll-card__label {
+      display: inline-block; padding: 6px 16px;
+      border: 1px solid rgba(255,255,255,.5); border-radius: var(--r-full);
+      font-size: .7rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
+      background: rgba(0,0,0,.3); backdrop-filter: blur(4px);
+      transition: background .2s, border-color .2s;
+    }
+    .coll-card:hover .coll-card__label { background: rgba(255,255,255,.15); border-color: rgba(255,255,255,.8); }
+    .coll-card__title { font-family: var(--serif); font-size: 1.5rem; font-weight: 300; margin-top: 6px; }
+
+    .coll-basics   .coll-card__bg { background: linear-gradient(160deg, #e8e4df 0%, #c8c0b8 100%); }
+    .coll-graphics .coll-card__bg { background: linear-gradient(160deg, #1a1a2e 0%, #0d0d1e 100%); }
+    .coll-limited  .coll-card__bg { background: linear-gradient(160deg, var(--wine) 0%, var(--wine-dark) 100%); }
+
+    /* ── CAROUSEL ──────────────────────────────────────────────── */
+    .carousel-section { padding: 0 0 72px; }
+    .carousel-section + .carousel-section { padding-top: 0; }
+    .carousel-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 20px; padding-bottom: 14px;
+      border-bottom: 1px solid var(--grey-mid);
+    }
+    .carousel-header h3 {
+      font-family: var(--serif); font-size: 1.5rem; font-weight: 400; letter-spacing: -.01em;
+    }
+    .carousel-header__actions { display: flex; gap: 6px; }
+    .carousel-arrow {
+      width: 40px; height: 40px; border: 1px solid var(--grey-mid);
+      border-radius: var(--r-sm); display: flex; align-items: center; justify-content: center;
+      color: var(--grey-text); transition: .15s; background: var(--white);
+    }
+    .carousel-arrow:hover { border-color: var(--black); color: var(--black); }
+    .carousel-arrow:focus-visible { outline: 2px solid var(--wine); outline-offset: 2px; }
+    .carousel-track {
+      display: flex; gap: 16px;
+      overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-left: 0;
+      scrollbar-width: none; -ms-overflow-style: none;
+      padding-bottom: 4px;
+    }
+    .carousel-track::-webkit-scrollbar { display: none; }
+
+    /* ── PRODUCT CARD ──────────────────────────────────────────── */
+    .product-card {
+      flex: 0 0 240px; scroll-snap-align: start;
+      background: var(--white); border: 1px solid var(--grey-mid);
+      border-radius: var(--r-md); overflow: hidden;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .product-card:hover { transform: translateY(-4px); box-shadow: var(--sh-md); }
+    .product-card__img {
+      aspect-ratio: 3/3.5; position: relative;
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
+    .product-card__badge {
+      position: absolute; top: 10px; left: 10px; z-index: 1;
+      font-size: .65rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+      padding: 4px 10px; border-radius: var(--r-full);
+    }
+    .badge-new  { background: var(--black); color: var(--white); }
+    .badge-sale { background: var(--wine); color: var(--white); }
+    .product-card__wish {
+      position: absolute; top: 10px; right: 10px; z-index: 1;
+      width: 34px; height: 34px; min-width: 34px; min-height: 34px;
+      background: rgba(255,255,255,.9); border-radius: var(--r-full);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity .15s; color: var(--grey-text);
+    }
+    .product-card:hover .product-card__wish, .product-card__wish:focus { opacity: 1; }
+    .product-card__wish:focus-visible { outline: 2px solid var(--wine); outline-offset: 2px; opacity: 1; }
+    .product-card__wish.active { color: var(--wine); }
+    .product-card__body { padding: 14px; }
+    .product-card__cat { font-size: .65rem; letter-spacing: .1em; text-transform: uppercase; color: var(--wine); margin-bottom: 4px; }
+    .product-card__name { font-family: var(--serif); font-size: 1.15rem; font-weight: 400; line-height: 1.2; margin-bottom: 8px; }
+    .product-card__prices { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+    .product-card__price { font-size: 1rem; font-weight: 600; }
+    .product-card__orig { font-size: .85rem; color: var(--grey-muted); text-decoration: line-through; }
+    .product-card__colors { display: flex; gap: 5px; margin-bottom: 12px; }
+    .swatch {
+      width: 18px; height: 18px; border-radius: var(--r-full);
+      border: 2px solid transparent; cursor: pointer; transition: transform .15s; outline: none;
+    }
+    .swatch:hover { transform: scale(1.25); }
+    .swatch.active { border-color: var(--black); }
+    .swatch:focus-visible { outline: 2px solid var(--wine); outline-offset: 2px; }
+    .product-card__sizes { display: flex; gap: 5px; margin-bottom: 14px; flex-wrap: wrap; }
+    .size-btn {
+      min-width: 34px; height: 34px; padding: 0 6px;
+      font-size: .65rem; font-weight: 500; letter-spacing: .05em;
+      border: 1px solid var(--grey-mid); border-radius: var(--r-sm);
+      background: var(--white); color: var(--grey-text); transition: .15s;
+    }
+    .size-btn:hover { border-color: var(--black); color: var(--black); }
+    .size-btn.active { border-color: var(--black); background: var(--black); color: var(--white); }
+    .size-btn:focus-visible { outline: 2px solid var(--wine); outline-offset: 2px; }
+    .size-btn:disabled { opacity: .3; cursor: not-allowed; text-decoration: line-through; }
+    .add-btn { font-size: .7rem; letter-spacing: .08em; }
+
+    /* ── LOOKBOOK ──────────────────────────────────────────────── */
+    .lookbook { background: var(--off-white); padding: 88px 0; }
+    .lookbook__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px; margin-top: 48px;
+    }
+    .lookbook__item { position: relative; overflow: hidden; border-radius: var(--r-md); }
+    .lookbook__photo {
+      width: 100%; aspect-ratio: 2/3;
+      background: var(--grey-mid);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+      color: var(--grey-muted); border: 2px dashed var(--grey-mid);
+      border-radius: var(--r-md); overflow: hidden;
+      transition: border-color .2s;
+      /* Replace with: <img src="modelo-1.jpg" alt="..."> */
+    }
+    .lookbook__photo:hover { border-color: var(--black); }
+    .lookbook__photo svg { opacity: .4; }
+    .lookbook__photo-hint { font-size: .65rem; letter-spacing: .1em; text-transform: uppercase; text-align: center; opacity: .7; padding: 0 12px; line-height: 1.6; }
+    .lookbook__label {
+      position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
+      background: rgba(255,255,255,.92); backdrop-filter: blur(6px);
+      color: var(--black); font-size: .65rem; font-weight: 600;
+      letter-spacing: .12em; text-transform: uppercase;
+      padding: 8px 18px; border-radius: var(--r-full);
+      white-space: nowrap; border: 1px solid rgba(0,0,0,.08);
+    }
+
+    /* ── FEATURES ──────────────────────────────────────────────── */
+    .features { background: var(--white); padding: 72px 0; border-top: 1px solid var(--grey-mid); border-bottom: 1px solid var(--grey-mid); }
+    .features__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
+    .feature { text-align: center; }
+    .feature__icon {
+      width: 56px; height: 56px; margin: 0 auto 16px;
+      border: 1px solid var(--grey-mid); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; color: var(--black);
+    }
+    .feature__title { font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 8px; }
+    .feature__desc { font-size: .85rem; color: var(--grey-text); line-height: 1.65; }
+
+    /* ── NEWSLETTER ────────────────────────────────────────────── */
+    .newsletter { background: var(--grey-light); padding: 80px 0; }
+    .newsletter__inner { max-width: 540px; margin: 0 auto; text-align: center; }
+    .newsletter h2 { font-family: var(--serif); font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 300; letter-spacing: -.01em; margin-bottom: 10px; }
+    .newsletter p { color: var(--grey-text); margin-bottom: 32px; }
+    .newsletter label { display: block; font-size: .65rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 8px; text-align: left; }
+    .newsletter__row { display: flex; gap: 0; border: 1px solid var(--black); border-radius: var(--r-sm); overflow: hidden; }
+    .newsletter__row input {
+      flex: 1; height: 50px; padding: 0 18px; border: none;
+      font-size: .95rem; background: var(--white); outline: none;
+    }
+    .newsletter__row .btn { border-radius: 0; border: none; min-height: 50px; padding: 0 24px; }
+    .newsletter__error { color: #b91c1c; font-size: .8rem; margin-top: 6px; text-align: left; display: none; }
+    .newsletter__error.v { display: block; }
+    .newsletter__ok { display: none; background: #f0fdf4; border: 1px solid #bbf7d0; color: #15803d; border-radius: var(--r-sm); padding: 12px 16px; font-size: .85rem; align-items: center; gap: 8px; margin-top: 12px; }
+    .newsletter__ok.v { display: flex; }
+
+    /* ── FOOTER ────────────────────────────────────────────────── */
+    .footer { background: var(--black); color: rgba(255,255,255,.7); padding: 72px 0 36px; }
+    .footer__grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 52px; }
+    .footer .logo { color: var(--white); display: inline-block; margin-bottom: 14px; }
+    .footer__desc { font-size: .875rem; line-height: 1.85; max-width: 240px; }
+    .footer__title { font-size: .65rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--white); margin-bottom: 18px; }
+    .footer__links li+li { margin-top: 11px; }
+    .footer__links a { font-size: .875rem; color: rgba(255,255,255,.45); transition: color .15s; }
+    .footer__links a:hover { color: var(--white); }
+    .footer__links a:focus-visible { outline: 1px solid var(--wine); outline-offset: 2px; border-radius: 1px; }
+    .footer__bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 28px; border-top: 1px solid rgba(255,255,255,.08); flex-wrap: wrap; gap: 12px; }
+    .footer__copy { font-size: .75rem; color: rgba(255,255,255,.25); letter-spacing: .04em; }
+    .footer__social { display: flex; gap: 8px; }
+    .footer__social a { width: 44px; height: 44px; border: 1px solid rgba(255,255,255,.12); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.45); transition: .2s; }
+    .footer__social a:hover { border-color: rgba(255,255,255,.3); color: var(--white); }
+    .footer__social a:focus-visible { outline: 2px solid var(--wine); outline-offset: 2px; }
+
+    /* ── CART DRAWER ───────────────────────────────────────────── */
+    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 199; opacity: 0; pointer-events: none; transition: opacity .25s; }
+    .overlay.v { opacity: 1; pointer-events: all; }
+    .cart-drawer {
+      position: fixed; top: 0; right: 0; bottom: 0; width: min(420px, 100vw);
+      background: var(--white); z-index: 200;
+      transform: translateX(100%); transition: transform .3s cubic-bezier(.4,0,.2,1);
+      display: flex; flex-direction: column; box-shadow: var(--sh-lg);
+    }
+    .cart-drawer.v { transform: translateX(0); }
+    .cart-drawer__head { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; border-bottom: 1px solid var(--grey-mid); flex-shrink: 0; }
+    .cart-drawer__head h2 { font-family: var(--serif); font-size: 1.4rem; font-weight: 300; }
+    .cart-drawer__body { flex: 1; overflow-y: auto; padding: 24px; }
+    .cart-empty { text-align: center; padding: 60px 0; color: var(--grey-text); }
+    .cart-empty svg { margin: 0 auto 16px; opacity: .2; }
+    .cart-empty p { font-family: var(--serif); font-size: 1.2rem; font-weight: 300; margin-bottom: 20px; }
+    .cart-items { display: flex; flex-direction: column; gap: 16px; }
+    .cart-item { display: grid; grid-template-columns: 68px 1fr auto; gap: 12px; align-items: start; }
+    .cart-item__thumb { width: 68px; height: 68px; border-radius: var(--r-sm); display: flex; align-items: center; justify-content: center; }
+    .cart-item__name { font-family: var(--serif); font-size: 1rem; margin-bottom: 2px; }
+    .cart-item__meta { font-size: .75rem; color: var(--grey-text); margin-bottom: 8px; }
+    .cart-item__qty { display: flex; align-items: center; gap: 8px; }
+    .cart-item__qty button { width: 28px; height: 28px; border: 1px solid var(--grey-mid); display: flex; align-items: center; justify-content: center; font-weight: 600; transition: .15s; }
+    .cart-item__qty button:hover { border-color: var(--black); }
+    .cart-item__qty button:focus-visible { outline: 2px solid var(--wine); outline-offset: 2px; }
+    .cart-item__qty span { font-size: .875rem; font-weight: 600; min-width: 20px; text-align: center; }
+    .cart-item__price { font-weight: 600; white-space: nowrap; }
+    .cart-item__del { color: var(--grey-muted); padding: 4px; margin-top: 2px; }
+    .cart-item__del:hover { color: #b91c1c; }
+    .cart-drawer__foot { padding: 20px 24px; border-top: 1px solid var(--grey-mid); flex-shrink: 0; }
+    .cart-subtotal { display: flex; justify-content: space-between; margin-bottom: 16px; }
+    .cart-subtotal span:first-child { font-size: .875rem; color: var(--grey-text); }
+    .cart-subtotal span:last-child { font-family: var(--serif); font-size: 1.4rem; font-weight: 400; }
+    .cart-note { font-size: .7rem; color: var(--grey-text); text-align: center; margin-top: 10px; letter-spacing: .04em; }
+
+    /* ── TOAST ─────────────────────────────────────────────────── */
+    .toast {
+      position: fixed; bottom: 24px; left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--black); color: var(--white);
+      padding: 12px 22px; display: flex; align-items: center; gap: 10px;
+      font-size: .8rem; letter-spacing: .04em; white-space: nowrap;
+      box-shadow: var(--sh-lg); z-index: 300;
+      transition: transform .3s cubic-bezier(.4,0,.2,1);
+    }
+    .toast.v { transform: translateX(-50%) translateY(0); }
+    .toast__dot { width: 6px; height: 6px; border-radius: 50%; background: var(--wine); flex-shrink: 0; }
+
+    /* ── MOBILE NAV ────────────────────────────────────────────── */
+    .mobile-nav {
+      position: fixed; inset: 0; z-index: 150; background: var(--white);
+      transform: translateX(-100%); transition: transform .3s cubic-bezier(.4,0,.2,1);
+      padding: 28px 24px; display: flex; flex-direction: column; gap: 0;
+    }
+    .mobile-nav.v { transform: translateX(0); }
+    .mobile-nav__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 36px; }
+    .mobile-nav a { display: block; padding: 16px 0; font-family: var(--serif); font-size: 1.8rem; font-weight: 300; border-bottom: 1px solid var(--grey-mid); color: var(--black); transition: color .15s; }
+    .mobile-nav a:hover { color: var(--wine); }
+    .mobile-nav a:focus-visible { outline: 2px solid var(--wine); }
+
+    /* ── SCROLL PROGRESS ───────────────────────────────────────── */
+    .scroll-progress {
+      position: fixed; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--wine); z-index: 9999; pointer-events: none;
+      transform-origin: left center; transform: scaleX(0);
+    }
+    @media (prefers-reduced-motion: reduce) { .scroll-progress { display: none; } }
+
+    /* ── RESPONSIVE ────────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .features__grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+      .footer__grid { grid-template-columns: 1fr 1fr; }
+      .lookbook__grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .main-nav { display: none; }
+      .mobile-menu-btn { display: flex; }
+      .hero__inner { grid-template-columns: 1fr; }
+      .hero__content { padding: 48px 0 40px; }
+      .hero__photo { min-height: 380px; }
+      .model-placeholder { min-height: 380px; }
+      .collections__grid { grid-template-columns: 1fr; }
+      .footer__grid { grid-template-columns: 1fr; }
+      .features__grid { grid-template-columns: 1fr 1fr; }
+      .lookbook__grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .features__grid { grid-template-columns: 1fr; }
+      .hero__ctas { flex-direction: column; }
+      .hero__ctas .btn { width: 100%; }
+      .newsletter__row { flex-direction: column; border: none; gap: 8px; }
+      .newsletter__row input { border: 1px solid var(--black); border-radius: var(--r-sm); }
+      .newsletter__row .btn { border-radius: var(--r-sm); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Scroll progress bar (GSAP-driven scaleX scrub) -->
+<div class="scroll-progress" aria-hidden="true"></div>
+
+<!-- ── TICKER ─────────────────────────────────────────────────── -->
+<div class="ticker" aria-label="Promoción">
+  <div class="ticker__track" aria-hidden="true">
+    <div class="ticker__item">Obtén hasta un 50% de descuento en tu primera compra <span class="ticker__dot">✦</span></div>
+    <div class="ticker__item">Envío gratis en compras mayores a $50 <span class="ticker__dot">✦</span></div>
+    <div class="ticker__item">Devoluciones sin complicaciones en 30 días <span class="ticker__dot">✦</span></div>
+    <div class="ticker__item">Algodón 100% orgánico certificado <span class="ticker__dot">✦</span></div>
+    <div class="ticker__item">Obtén hasta un 50% de descuento en tu primera compra <span class="ticker__dot">✦</span></div>
+    <div class="ticker__item">Envío gratis en compras mayores a $50 <span class="ticker__dot">✦</span></div>
+    <div class="ticker__item">Devoluciones sin complicaciones en 30 días <span class="ticker__dot">✦</span></div>
+    <div class="ticker__item">Algodón 100% orgánico certificado <span class="ticker__dot">✦</span></div>
+  </div>
+</div>
+
+<!-- ── HEADER ─────────────────────────────────────────────────── -->
+<header class="header">
+  <div class="container header__inner">
+    <button class="btn-icon btn-ghost mobile-menu-btn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-nav">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <a href="/" class="logo" aria-label="V/IV — Inicio">V/IV</a>
+    <nav class="main-nav" aria-label="Navegación principal">
+      <ul role="list">
+        <li><a href="#shop">Tienda</a></li>
+        <li><a href="#collections">Colecciones</a></li>
+        <li><a href="#lookbook">Lookbook</a></li>
+        <li><a href="#newsletter">Ofertas</a></li>
+      </ul>
+    </nav>
+    <div class="header__actions">
+      <button class="btn-icon btn-ghost" aria-label="Buscar">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </button>
+      <button class="btn-icon btn-ghost cart-btn" aria-label="Carrito" aria-controls="cart-drawer">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-count hidden" aria-live="polite">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ── MOBILE NAV ─────────────────────────────────────────────── -->
+<nav class="mobile-nav" id="mobile-nav" aria-label="Navegación móvil" aria-hidden="true">
+  <div class="mobile-nav__head">
+    <span class="logo">V/IV</span>
+    <button class="btn-icon btn-ghost mobile-nav-close" aria-label="Cerrar menú">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <a href="#shop">Tienda</a>
+  <a href="#collections">Colecciones</a>
+  <a href="#lookbook">Lookbook</a>
+  <a href="#newsletter">Ofertas</a>
+</nav>
+
+<main>
+
+  <!-- ── HERO ───────────────────────────────────────────────────── -->
+  <section class="hero" aria-labelledby="hero-h1">
+    <div class="hero__inner">
+
+      <!-- LEFT: text -->
+      <div class="container" style="display:contents">
+        <div class="hero__content" style="padding-left:max(24px, calc((100vw - 1240px)/2 + 24px))">
+          <div class="hero__eyebrow">
+            <span class="hero__eyebrow-line"></span>
+            <span>Colección Primavera 2026</span>
+          </div>
+          <h1 id="hero-h1">Viste lo que<br><em>te define.</em></h1>
+          <p class="hero__desc">Prendas premium de algodón orgánico 100%. Cómodas, sostenibles y hechas para durar toda una vida.</p>
+          <div class="hero__ctas">
+            <a href="#shop" class="btn btn-wine btn-lg">Comprar Ahora</a>
+            <a href="#collections" class="btn btn-outline-w btn-lg">Ver Colecciones</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: model photo placeholder -->
+      <div class="hero__photo">
+        <!--
+          ╔══════════════════════════════════════════════════════╗
+          ║  FOTO DE MODELO — Reemplaza este div con:            ║
+          ║  <img src="tu-foto.jpg"                              ║
+          ║       alt="Modelo usando V/IV"                       ║
+          ║       style="width:100%;height:100%;object-fit:cover"║
+          ║  >                                                   ║
+          ╚══════════════════════════════════════════════════════╝
+        -->
+        <div class="model-placeholder" id="hero-model-placeholder" role="img" aria-label="Espacio para foto de modelo">
+          <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          <div class="model-placeholder__title">Foto de tu Modelo</div>
+          <div class="model-placeholder__sub">Sube aquí una foto de tu modelo usando las camisetas V/IV</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── WINE TICKER DIVIDER ────────────────────────────────────── -->
+  <div class="wine-ticker ticker" role="presentation" aria-hidden="true">
+    <div class="ticker__track" style="animation-duration:20s">
+      <div class="ticker__item">Nueva Colección <span class="ticker__dot">✦</span></div>
+      <div class="ticker__item">Diseño Atemporal <span class="ticker__dot">✦</span></div>
+      <div class="ticker__item">Hecho con Amor <span class="ticker__dot">✦</span></div>
+      <div class="ticker__item">50% Descuento <span class="ticker__dot">✦</span></div>
+      <div class="ticker__item">Sostenible <span class="ticker__dot">✦</span></div>
+      <div class="ticker__item">Nueva Colección <span class="ticker__dot">✦</span></div>
+      <div class="ticker__item">Diseño Atemporal <span class="ticker__dot">✦</span></div>
+      <div class="ticker__item">Hecho con Amor <span class="ticker__dot">✦</span></div>
+      <div class="ticker__item">50% Descuento <span class="ticker__dot">✦</span></div>
+      <div class="ticker__item">Sostenible <span class="ticker__dot">✦</span></div>
+    </div>
+  </div>
+
+  <!-- ── COLLECTIONS ────────────────────────────────────────────── -->
+  <section class="section" id="collections" aria-labelledby="coll-heading">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">
+          <span class="section-eyebrow-line"></span>
+          <span>Explorar</span>
+        </div>
+        <h2 id="coll-heading">Nuestras Colecciones</h2>
+      </div>
+      <div class="collections__grid">
+        <a href="#shop" class="coll-card coll-basics" aria-label="Ver Básicos">
+          <div class="coll-card__bg"></div><div class="coll-card__overlay"></div>
+          <div class="coll-card__content">
+            <div class="coll-card__label">Colección</div>
+            <div class="coll-card__title">Los Básicos</div>
+          </div>
+        </a>
+        <a href="#shop" class="coll-card coll-graphics" aria-label="Ver Gráficos">
+          <div class="coll-card__bg"></div><div class="coll-card__overlay"></div>
+          <div class="coll-card__content">
+            <div class="coll-card__label">Colección</div>
+            <div class="coll-card__title">Gráficos</div>
+          </div>
+        </a>
+        <a href="#shop" class="coll-card coll-limited" aria-label="Ver Edición Limitada">
+          <div class="coll-card__bg"></div><div class="coll-card__overlay"></div>
+          <div class="coll-card__content">
+            <div class="coll-card__label">Edición</div>
+            <div class="coll-card__title">Limitada</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PRODUCT CAROUSELS ──────────────────────────────────────── -->
+  <section class="section section-alt" id="shop" aria-labelledby="shop-heading">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">
+          <span class="section-eyebrow-line"></span>
+          <span>Tienda</span>
+        </div>
+        <h2 id="shop-heading">Más Vendidos</h2>
+      </div>
+
+      <!-- Carousel: Cuello Redondo -->
+      <div class="carousel-section">
+        <div class="carousel-header">
+          <h3>Cuello Redondo</h3>
+          <div class="carousel-header__actions">
+            <button class="carousel-arrow" data-dir="prev" data-target="cr1" aria-label="Anterior">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button class="carousel-arrow" data-dir="next" data-target="cr1" aria-label="Siguiente">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="carousel-track" id="cr1" role="list">
+
+          <article class="product-card" role="listitem" data-cat="basics">
+            <div class="product-card__img" style="background:linear-gradient(145deg,#f5f3f0,#e8e4df)">
+              <span class="product-card__badge badge-new">Nuevo</span>
+              <button class="product-card__wish" aria-label="Guardar Camiseta Blanca Clásica" aria-pressed="false">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+              </button>
+              <svg width="110" height="100" viewBox="0 0 240 220" fill="none" aria-hidden="true"><path d="M60 10L10 55L40 65L40 200L200 200L200 65L230 55L180 10Q155 40 120 40Q85 40 60 10Z" fill="#fff" stroke="#ddd" stroke-width="2"/></svg>
+            </div>
+            <div class="product-card__body">
+              <div class="product-card__cat">Básicos</div>
+              <h3 class="product-card__name">Camiseta Blanca Clásica</h3>
+              <div class="product-card__prices"><span class="product-card__price">$29</span></div>
+              <div class="product-card__colors" role="group" aria-label="Colores">
+                <button class="swatch active" style="background:#fff;border-color:#ccc" aria-label="Blanco" aria-pressed="true" title="Blanco"></button>
+                <button class="swatch" style="background:#d4d0cc" aria-label="Gris" aria-pressed="false" title="Gris"></button>
+                <button class="swatch" style="background:#0a0a0a" aria-label="Negro" aria-pressed="false" title="Negro"></button>
+              </div>
+              <div class="product-card__sizes" role="group" aria-label="Tallas">
+                <button class="size-btn" aria-pressed="false">XS</button>
+                <button class="size-btn active" aria-pressed="true">S</button>
+                <button class="size-btn" aria-pressed="false">M</button>
+                <button class="size-btn" aria-pressed="false">L</button>
+                <button class="size-btn" aria-pressed="false">XL</button>
+              </div>
+              <button class="btn btn-black btn-full add-btn" data-name="Camiseta Blanca Clásica" data-price="29" data-color="Blanco" data-bg="linear-gradient(145deg,#f5f3f0,#e8e4df)">Agregar</button>
+            </div>
+          </article>
+
+          <article class="product-card" role="listitem" data-cat="basics">
+            <div class="product-card__img" style="background:linear-gradient(145deg,#1a1a1a,#0a0a0a)">
+              <button class="product-card__wish" aria-label="Guardar Camiseta Negra" aria-pressed="false">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+              </button>
+              <svg width="110" height="100" viewBox="0 0 240 220" fill="none" aria-hidden="true"><path d="M60 10L10 55L40 65L40 200L200 200L200 65L230 55L180 10Q155 40 120 40Q85 40 60 10Z" fill="#1a1a1a" stroke="#333" stroke-width="2"/></svg>
+            </div>
+            <div class="product-card__body">
+              <div class="product-card__cat">Básicos</div>
+              <h3 class="product-card__name">Camiseta Negra Midnight</h3>
+              <div class="product-card__prices"><span class="product-card__price">$29</span></div>
+              <div class="product-card__colors" role="group" aria-label="Colores">
+                <button class="swatch active" style="background:#0a0a0a" aria-label="Negro" aria-pressed="true" title="Negro"></button>
+                <button class="swatch" style="background:#2a2a2a" aria-label="Carbón" aria-pressed="false" title="Carbón"></button>
+              </div>
+              <div class="product-card__sizes" role="group" aria-label="Tallas">
+                <button class="size-btn" aria-pressed="false">XS</button>
+                <button class="size-btn" aria-pressed="false">S</button>
+                <button class="size-btn active" aria-pressed="true">M</button>
+                <button class="size-btn" aria-pressed="false">L</button>
+                <button class="size-btn" aria-pressed="false">XL</button>
+              </div>
+              <button class="btn btn-black btn-full add-btn" data-name="Camiseta Negra Midnight" data-price="29" data-color="Negro" data-bg="linear-gradient(145deg,#1a1a1a,#0a0a0a)">Agregar</button>
+            </div>
+          </article>
+
+          <article class="product-card" role="listitem" data-cat="basics">
+            <div class="product-card__img" style="background:linear-gradient(145deg,#7a2235,#4a1520)">
+              <span class="product-card__badge badge-new">Nuevo</span>
+              <button class="product-card__wish" aria-label="Guardar Camiseta Vino" aria-pressed="false">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+              </button>
+              <svg width="110" height="100" viewBox="0 0 240 220" fill="none" aria-hidden="true"><path d="M60 10L10 55L40 65L40 200L200 200L200 65L230 55L180 10Q155 40 120 40Q85 40 60 10Z" fill="#6B1E2E" stroke="#8a2a3e" stroke-width="2"/></svg>
+            </div>
+            <div class="product-card__body">
+              <div class="product-card__cat">Básicos</div>
+              <h3 class="product-card__name">Camiseta Vino Oscuro</h3>
+              <div class="product-card__prices"><span class="product-card__price">$34</span></div>
+              <div class="product-card__colors" role="group" aria-label="Colores">
+                <button class="swatch active" style="background:#6B1E2E" aria-label="Vino" aria-pressed="true" title="Vino"></button>
+                <button class="swatch" style="background:#4a1520" aria-label="Borgoña" aria-pressed="false" title="Borgoña"></button>
+              </div>
+              <div class="product-card__sizes" role="group" aria-label="Tallas">
+                <button class="size-btn" aria-pressed="false">XS</button>
+                <button class="size-btn" aria-pressed="false">S</button>
+                <button class="size-btn" aria-pressed="false">M</button>
+                <button class="size-btn active" aria-pressed="true">L</button>
+                <button class="size-btn" aria-pressed="false">XL</button>
+              </div>
+              <button class="btn btn-black btn-full add-btn" data-name="Camiseta Vino Oscuro" data-price="34" data-color="Vino" data-bg="linear-gradient(145deg,#7a2235,#4a1520)">Agregar</button>
+            </div>
+          </article>
+
+          <article class="product-card" role="listitem" data-cat="basics">
+            <div class="product-card__img" style="background:linear-gradient(145deg,#c8c4be,#a8a49e)">
+              <button class="product-card__wish" aria-label="Guardar Essential Arena" aria-pressed="false">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+              </button>
+              <svg width="110" height="100" viewBox="0 0 240 220" fill="none" aria-hidden="true"><path d="M60 10L10 55L40 65L40 200L200 200L200 65L230 55L180 10Q155 40 120 40Q85 40 60 10Z" fill="#c8c4be" stroke="#b0aca6" stroke-width="2"/></svg>
+            </div>
+            <div class="product-card__body">
+              <div class="product-card__cat">Básicos</div>
+              <h3 class="product-card__name">Essential Gris Arena</h3>
+              <div class="product-card__prices"><span class="product-card__price">$29</span></div>
+              <div class="product-card__colors" role="group" aria-label="Colores">
+                <button class="swatch active" style="background:#c8c4be" aria-label="Arena" aria-pressed="true" title="Arena"></button>
+                <button class="swatch" style="background:#a8a49e" aria-label="Piedra" aria-pressed="false" title="Piedra"></button>
+              </div>
+              <div class="product-card__sizes" role="group" aria-label="Tallas">
+                <button class="size-btn" aria-pressed="false">XS</button>
+                <button class="size-btn active" aria-pressed="true">S</button>
+                <button class="size-btn" aria-pressed="false">M</button>
+                <button class="size-btn" aria-pressed="false">L</button>
+                <button class="size-btn" aria-pressed="false">XL</button>
+              </div>
+              <button class="btn btn-black btn-full add-btn" data-name="Essential Gris Arena" data-price="29" data-color="Arena" data-bg="linear-gradient(145deg,#c8c4be,#a8a49e)">Agregar</button>
+            </div>
+          </article>
+
+          <article class="product-card" role="listitem" data-cat="basics">
+            <div class="product-card__img" style="background:linear-gradient(145deg,#2d5016,#1a3009)">
+              <button class="product-card__wish" aria-label="Guardar Verde Bosque" aria-pressed="false">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+              </button>
+              <svg width="110" height="100" viewBox="0 0 240 220" fill="none" aria-hidden="true"><path d="M60 10L10 55L40 65L40 200L200 200L200 65L230 55L180 10Q155 40 120 40Q85 40 60 10Z" fill="#2d5016" stroke="#4a7a22" stroke-width="2"/></svg>
+            </div>
+            <div class="product-card__body">
+              <div class="product-card__cat">Básicos</div>
+              <h3 class="product-card__name">Verde Bosque Essential</h3>
+              <div class="product-card__prices"><span class="product-card__price">$29</span></div>
+              <div class="product-card__colors" role="group" aria-label="Colores">
+                <button class="swatch active" style="background:#2d5016" aria-label="Bosque" aria-pressed="true" title="Bosque"></button>
+                <button class="swatch" style="background:#4a7a22" aria-label="Olivo" aria-pressed="false" title="Olivo"></button>
+              </div>
+              <div class="product-card__sizes" role="group" aria-label="Tallas">
+                <button class="size-btn" aria-pressed="false">XS</button>
+                <button class="size-btn active" aria-pressed="true">S</button>
+                <button class="size-btn" aria-pressed="false">M</button>
+                <button class="size-btn" aria-pressed="false">L</button>
+                <button class="size-btn" aria-pressed="false">XL</button>
+              </div>
+              <button class="btn btn-black btn-full add-btn" data-name="Verde Bosque Essential" data-price="29" data-color="Bosque" data-bg="linear-gradient(145deg,#2d5016,#1a3009)">Agregar</button>
+            </div>
+          </article>
+
+        </div><!-- /cr1 -->
+      </div>
+
+      <!-- Carousel: Gráficos & Oversized -->
+      <div class="carousel-section">
+        <div class="carousel-header">
+          <h3>Gráficos &amp; Oversized</h3>
+          <div class="carousel-header__actions">
+            <button class="carousel-arrow" data-dir="prev" data-target="cr2" aria-label="Anterior">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button class="carousel-arrow" data-dir="next" data-target="cr2" aria-label="Siguiente">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="carousel-track" id="cr2" role="list">
+
+          <article class="product-card" role="listitem">
+            <div class="product-card__img" style="background:linear-gradient(145deg,#1a2a3a,#0d1a26)">
+              <span class="product-card__badge badge-sale">-20%</span>
+              <button class="product-card__wish" aria-label="Guardar Gráfico Ola Marina" aria-pressed="false">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+              </button>
+              <svg width="110" height="100" viewBox="0 0 240 220" fill="none" aria-hidden="true">
+                <path d="M60 10L10 55L40 65L40 200L200 200L200 65L230 55L180 10Q155 40 120 40Q85 40 60 10Z" fill="#1a2a3a" stroke="#2a4a6a" stroke-width="2"/>
+                <path d="M70 130 Q90 115 110 130 Q130 145 150 130 Q170 115 190 130" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".7"/>
+              </svg>
+            </div>
+            <div class="product-card__body">
+              <div class="product-card__cat">Gráfico</div>
+              <h3 class="product-card__name">Gráfico Ola Marina</h3>
+              <div class="product-card__prices">
+                <span class="product-card__price">$31</span>
+                <span class="product-card__orig">$39</span>
+              </div>
+              <div class="product-card__colors" role="group" aria-label="Colores">
+                <button class="swatch active" style="background:#1a2a3a" aria-label="Marino" aria-pressed="true" title="Marino"></button>
+                <button class="swatch" style="background:#2d5a8f" aria-label="Azul" aria-pressed="false" title="Azul"></button>
+              </div>
+              <div class="product-card__sizes" role="group" aria-label="Tallas">
+                <button class="size-btn" aria-pressed="false">S</button>
+                <button class="size-btn" aria-pressed="false">M</button>
+                <button class="size-btn active" aria-pressed="true">L</button>
+                <button class="size-btn" aria-pressed="false">XL</button>
+                <button class="size-btn" disabled>XXL</button>
+              </div>
+              <button class="btn btn-black btn-full add-btn" data-name="Gráfico Ola Marina" data-price="31" data-color="Marino" data-bg="linear-gradient(145deg,#1a2a3a,#0d1a26)">Agregar</button>
+            </div>
+          </article>
+
+          <article class="product-card" role="listitem">
+            <div class="product-card__img" style="background:linear-gradient(145deg,#1a1a1a,#2a1520)">
+              <button class="product-card__wish" aria-label="Guardar Oversized V/IV Signature" aria-pressed="false">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+              </button>
+              <svg width="110" height="100" viewBox="0 0 240 220" fill="none" aria-hidden="true">
+                <path d="M50 10L5 55L38 67L38 205L202 205L202 67L235 55L190 10Q160 44 120 44Q80 44 50 10Z" fill="#1a1a1a" stroke="#333" stroke-width="2"/>
+                <text x="120" y="132" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="26" fill="white" opacity=".6" letter-spacing="2">V/IV</text>
+              </svg>
+            </div>
+            <div class="product-card__body">
+              <div class="product-card__cat">Oversized</div>
+              <h3 class="product-card__name">Oversized V/IV Signature</h3>
+              <div class="product-card__prices"><span class="product-card__price">$44</span></div>
+              <div class="product-card__colors" role="group" aria-label="Colores">
+                <button class="swatch active" style="background:#0a0a0a" aria-label="Negro" aria-pressed="true" title="Negro"></button>
+                <button class="swatch" style="background:#6B1E2E" aria-label="Vino" aria-pressed="false" title="Vino"></button>
+                <button class="swatch" style="background:#f5f3f0" aria-label="Crema" aria-pressed="false" title="Crema"></button>
+              </div>
+              <div class="product-card__sizes" role="group" aria-label="Tallas">
+                <button class="size-btn" aria-pressed="false">S</button>
+                <button class="size-btn" aria-pressed="false">M</button>
+                <button class="size-btn active" aria-pressed="true">L</button>
+                <button class="size-btn" aria-pressed="false">XL</button>
+                <button class="size-btn" aria-pressed="false">XXL</button>
+              </div>
+              <button class="btn btn-black btn-full add-btn" data-name="Oversized V/IV Signature" data-price="44" data-color="Negro" data-bg="linear-gradient(145deg,#1a1a1a,#2a1520)">Agregar</button>
+            </div>
+          </article>
+
+          <article class="product-card" role="listitem">
+            <div class="product-card__img" style="background:linear-gradient(145deg,#2a1a3a,#1a0d26)">
+              <span class="product-card__badge badge-sale">-15%</span>
+              <button class="product-card__wish" aria-label="Guardar Gráfico Nocturno" aria-pressed="false">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+              </button>
+              <svg width="110" height="100" viewBox="0 0 240 220" fill="none" aria-hidden="true">
+                <path d="M60 10L10 55L40 65L40 200L200 200L200 65L230 55L180 10Q155 40 120 40Q85 40 60 10Z" fill="#2a1a3a" stroke="#4a2a6a" stroke-width="2"/>
+                <circle cx="120" cy="120" r="30" stroke="white" stroke-width="1.5" opacity=".5" fill="none"/>
+                <circle cx="120" cy="120" r="15" stroke="white" stroke-width="1.5" opacity=".3" fill="none"/>
+              </svg>
+            </div>
+            <div class="product-card__body">
+              <div class="product-card__cat">Gráfico</div>
+              <h3 class="product-card__name">Gráfico Nocturno</h3>
+              <div class="product-card__prices">
+                <span class="product-card__price">$34</span>
+                <span class="product-card__orig">$39</span>
+              </div>
+              <div class="product-card__colors" role="group" aria-label="Colores">
+                <button class="swatch active" style="background:#2a1a3a" aria-label="Púrpura" aria-pressed="true" title="Púrpura"></button>
+                <button class="swatch" style="background:#0a0a0a" aria-label="Negro" aria-pressed="false" title="Negro"></button>
+              </div>
+              <div class="product-card__sizes" role="group" aria-label="Tallas">
+                <button class="size-btn" aria-pressed="false">S</button>
+                <button class="size-btn active" aria-pressed="true">M</button>
+                <button class="size-btn" aria-pressed="false">L</button>
+                <button class="size-btn" aria-pressed="false">XL</button>
+              </div>
+              <button class="btn btn-black btn-full add-btn" data-name="Gráfico Nocturno" data-price="34" data-color="Púrpura" data-bg="linear-gradient(145deg,#2a1a3a,#1a0d26)">Agregar</button>
+            </div>
+          </article>
+
+          <article class="product-card" role="listitem">
+            <div class="product-card__img" style="background:linear-gradient(145deg,#1a1a1a,#111)">
+              <button class="product-card__wish" aria-label="Guardar Oversized Noir" aria-pressed="false">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+              </button>
+              <svg width="110" height="100" viewBox="0 0 240 220" fill="none" aria-hidden="true">
+                <path d="M50 10L5 55L38 67L38 205L202 205L202 67L235 55L190 10Q160 44 120 44Q80 44 50 10Z" fill="#111" stroke="#2a2a2a" stroke-width="2"/>
+              </svg>
+            </div>
+            <div class="product-card__body">
+              <div class="product-card__cat">Oversized</div>
+              <h3 class="product-card__name">Oversized Noir</h3>
+              <div class="product-card__prices"><span class="product-card__price">$44</span></div>
+              <div class="product-card__colors" role="group" aria-label="Colores">
+                <button class="swatch active" style="background:#111" aria-label="Negro" aria-pressed="true" title="Negro"></button>
+                <button class="swatch" style="background:#c8c4be" aria-label="Gris" aria-pressed="false" title="Gris"></button>
+              </div>
+              <div class="product-card__sizes" role="group" aria-label="Tallas">
+                <button class="size-btn" aria-pressed="false">S</button>
+                <button class="size-btn" aria-pressed="false">M</button>
+                <button class="size-btn active" aria-pressed="true">L</button>
+                <button class="size-btn" aria-pressed="false">XL</button>
+                <button class="size-btn" aria-pressed="false">XXL</button>
+              </div>
+              <button class="btn btn-black btn-full add-btn" data-name="Oversized Noir" data-price="44" data-color="Negro" data-bg="linear-gradient(145deg,#1a1a1a,#111)">Agregar</button>
+            </div>
+          </article>
+
+        </div><!-- /cr2 -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── LOOKBOOK ────────────────────────────────────────────────── -->
+  <section class="lookbook" id="lookbook" aria-labelledby="lookbook-heading">
+    <div class="container">
+      <div class="section-header section-header--center">
+        <div class="section-eyebrow section-eyebrow--center">
+          <span class="section-eyebrow-line"></span>
+          <span>Lookbook</span>
+          <span class="section-eyebrow-line"></span>
+        </div>
+        <h2 id="lookbook-heading">Úsalos en la Vida Real</h2>
+        <p>Sube fotos de tus modelos en cada categoría. Inspira a tus clientes con looks reales.</p>
+      </div>
+      <div class="lookbook__grid">
+
+        <div class="lookbook__item">
+          <!-- Replace with: <img src="modelo-basicos.jpg" alt="Modelo con Básicos V/IV" style="width:100%;height:100%;object-fit:cover;border-radius:var(--r-md)"> -->
+          <div class="lookbook__photo" role="img" aria-label="Foto de modelo — Básicos">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <div class="lookbook__photo-hint">Foto modelo<br>Básicos</div>
+          </div>
+          <div class="lookbook__label">Básicos</div>
+        </div>
+
+        <div class="lookbook__item">
+          <div class="lookbook__photo" role="img" aria-label="Foto de modelo — Vino">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <div class="lookbook__photo-hint">Foto modelo<br>Colección Vino</div>
+          </div>
+          <div class="lookbook__label">Colección Vino</div>
+        </div>
+
+        <div class="lookbook__item">
+          <div class="lookbook__photo" role="img" aria-label="Foto de modelo — Gráficos">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <div class="lookbook__photo-hint">Foto modelo<br>Gráficos</div>
+          </div>
+          <div class="lookbook__label">Gráficos</div>
+        </div>
+
+        <div class="lookbook__item">
+          <div class="lookbook__photo" role="img" aria-label="Foto de modelo — Oversized">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <div class="lookbook__photo-hint">Foto modelo<br>Oversized</div>
+          </div>
+          <div class="lookbook__label">Oversized</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FEATURES ───────────────────────────────────────────────── -->
+  <section class="features" id="features" aria-labelledby="feat-heading">
+    <h2 id="feat-heading" class="sr-only">Por qué V/IV</h2>
+    <div class="container features__grid">
+      <div class="feature">
+        <div class="feature__icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="3" width="15" height="13" rx="1"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+          </svg>
+        </div>
+        <div class="feature__title">Envío Gratis</div>
+        <div class="feature__desc">En pedidos mayores a $50. Entrega en 3–5 días hábiles a todo el país.</div>
+      </div>
+      <div class="feature">
+        <div class="feature__icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/>
+          </svg>
+        </div>
+        <div class="feature__title">Devoluciones 30 Días</div>
+        <div class="feature__desc">Si no fue lo que esperabas, te devolvemos el dinero sin preguntas.</div>
+      </div>
+      <div class="feature">
+        <div class="feature__icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <div class="feature__title">100% Pago Seguro</div>
+        <div class="feature__desc">Checkout cifrado. Aceptamos tarjetas, PayPal y transferencia.</div>
+      </div>
+      <div class="feature">
+        <div class="feature__icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+          </svg>
+        </div>
+        <div class="feature__title">Algodón Orgánico</div>
+        <div class="feature__desc">Certificado GOTS. Suave, transpirable y de color duradero.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── NEWSLETTER ──────────────────────────────────────────────── -->
+  <section class="newsletter" id="newsletter" aria-labelledby="nl-heading">
+    <div class="container">
+      <div class="newsletter__inner">
+        <div class="section-eyebrow section-eyebrow--center" style="justify-content:center;margin-bottom:12px">
+          <span class="section-eyebrow-line"></span>
+          <span>Exclusivo</span>
+          <span class="section-eyebrow-line"></span>
+        </div>
+        <h2 id="nl-heading">Suscríbete a<br>Nuestro Boletín</h2>
+        <p>Únete a más de 12,000 suscriptores y recibe 10% de descuento en tu primera compra.</p>
+        <form id="nl-form" novalidate>
+          <label for="nl-email">Su dirección de correo electrónico</label>
+          <div class="newsletter__row">
+            <input type="email" id="nl-email" name="email" placeholder="correo@ejemplo.com" autocomplete="email" required aria-describedby="nl-error">
+            <button type="submit" class="btn btn-black">Suscribirme</button>
+          </div>
+          <div class="newsletter__error" id="nl-error" role="alert" aria-live="polite">Por favor ingresa un correo válido.</div>
+          <div class="newsletter__ok" id="nl-ok" role="status" aria-live="polite">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            ¡Listo! Revisa tu bandeja de entrada.
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────── -->
+<footer class="footer" aria-labelledby="footer-h">
+  <h2 id="footer-h" class="sr-only">Footer V/IV</h2>
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <a href="/" class="logo" aria-label="V/IV — Inicio">V/IV</a>
+        <p class="footer__desc">Prendas premium de algodón orgánico para la vida cotidiana. Cómodas, sostenibles y hechas para durar.</p>
+      </div>
+      <div>
+        <div class="footer__title">Shop</div>
+        <ul class="footer__links" role="list">
+          <li><a href="#shop">Todos los Productos</a></li>
+          <li><a href="#collections">Básicos</a></li>
+          <li><a href="#collections">Gráficos</a></li>
+          <li><a href="#collections">Oversized</a></li>
+          <li><a href="#collections">Edición Limitada</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer__title">Info</div>
+        <ul class="footer__links" role="list">
+          <li><a href="#">Guía de Tallas</a></li>
+          <li><a href="#">Envíos</a></li>
+          <li><a href="#">Devoluciones</a></li>
+          <li><a href="#">Rastrear Pedido</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer__title">Empresa</div>
+        <ul class="footer__links" role="list">
+          <li><a href="#">Nuestra Historia</a></li>
+          <li><a href="#">Sostenibilidad</a></li>
+          <li><a href="#">Quiénes Somos</a></li>
+          <li><a href="#">Contacto</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="footer__copy">© 2026 V/IV. Todos los derechos reservados.</div>
+      <div class="footer__social">
+        <a href="#" aria-label="V/IV en Instagram">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="#" aria-label="V/IV en TikTok">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.17 8.17 0 004.78 1.52V6.72a4.85 4.85 0 01-1.01-.03z"/></svg>
+        </a>
+        <a href="#" aria-label="V/IV en Facebook">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ── CART DRAWER ─────────────────────────────────────────────── -->
+<aside class="cart-drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-label="Carrito" aria-hidden="true">
+  <div class="cart-drawer__head">
+    <h2>Tu Carrito (<span id="cart-count-lbl">0</span>)</h2>
+    <button class="btn-icon btn-ghost cart-close" aria-label="Cerrar carrito">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="cart-drawer__body">
+    <div class="cart-empty" id="cart-empty">
+      <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <p>Tu carrito está vacío</p>
+      <button class="btn btn-outline cart-close">Explorar Tienda</button>
+    </div>
+    <ul class="cart-items" id="cart-items" aria-label="Artículos en el carrito"></ul>
+  </div>
+  <div class="cart-drawer__foot" id="cart-foot" style="display:none">
+    <div class="cart-subtotal">
+      <span>Subtotal</span>
+      <span id="cart-total">$0</span>
+    </div>
+    <button class="btn btn-wine btn-full btn-lg">Finalizar Compra</button>
+    <p class="cart-note">Envío gratis en pedidos mayores a $50 · Impuestos al finalizar</p>
+  </div>
+</aside>
+<div class="overlay" id="overlay" aria-hidden="true"></div>
+
+<!-- ── TOAST ──────────────────────────────────────────────────── -->
+<div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true">
+  <span class="toast__dot"></span>
+  <span id="toast-msg">Agregado al carrito</span>
+</div>
+
+<script>
+// ── CART ──────────────────────────────────────────────────────
+let cart = [];
+const selSize  = c => (c.querySelector('.size-btn.active') || {textContent:'M'}).textContent.trim();
+const selColor = c => (c.querySelector('.swatch.active') || {getAttribute:()=>'Default'}).getAttribute('title') || 'Default';
+
+function addToCart(name, price, color, size, bg) {
+  const key = `${name}|${color}|${size}`;
+  const ex = cart.find(i => i.key === key);
+  ex ? ex.qty++ : cart.push({ key, name, price: +price, color, size, bg, qty: 1 });
+  renderCart(); showToast(`${name} agregado`);
+}
+function removeFromCart(key) { cart = cart.filter(i => i.key !== key); renderCart(); }
+function updateQty(key, d) {
+  const i = cart.find(x => x.key === key); if (!i) return;
+  i.qty += d; if (i.qty <= 0) cart = cart.filter(x => x.key !== key);
+  renderCart();
+}
+function renderCart() {
+  const total = cart.reduce((s,i) => s + i.price*i.qty, 0);
+  const count = cart.reduce((s,i) => s + i.qty, 0);
+  document.querySelectorAll('.cart-count').forEach(el => {
+    el.textContent = count; el.classList.toggle('hidden', count===0);
+    el.closest('button').setAttribute('aria-label', `Carrito, ${count} artículos`);
+  });
+  document.getElementById('cart-count-lbl').textContent = count;
+  document.getElementById('cart-total').textContent = `$${total.toFixed(2)}`;
+  document.getElementById('cart-empty').style.display = cart.length ? 'none' : 'block';
+  document.getElementById('cart-foot').style.display  = cart.length ? 'block' : 'none';
+  document.getElementById('cart-items').innerHTML = cart.map(item => `
+    <li class="cart-item">
+      <div class="cart-item__thumb" style="background:${item.bg}">
+        <svg width="36" height="32" viewBox="0 0 240 220" fill="none" aria-hidden="true">
+          <path d="M60 10L10 55L40 65L40 200L200 200L200 65L230 55L180 10Q155 40 120 40Q85 40 60 10Z" fill="rgba(255,255,255,.18)" stroke="rgba(255,255,255,.35)" stroke-width="4"/>
+        </svg>
+      </div>
+      <div>
+        <div class="cart-item__name">${item.name}</div>
+        <div class="cart-item__meta">${item.color} · Talla ${item.size}</div>
+        <div class="cart-item__qty">
+          <button onclick="updateQty('${item.key}',-1)" aria-label="Quitar uno">−</button>
+          <span>${item.qty}</span>
+          <button onclick="updateQty('${item.key}',1)" aria-label="Añadir uno">+</button>
+        </div>
+      </div>
+      <div>
+        <div class="cart-item__price">$${(item.price*item.qty).toFixed(2)}</div>
+        <button class="cart-item__del btn-icon" onclick="removeFromCart('${item.key}')" aria-label="Eliminar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>
+        </button>
+      </div>
+    </li>`).join('');
+}
+
+// ── PRODUCT INTERACTIONS ──────────────────────────────────────
+document.querySelectorAll('.add-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const card = this.closest('.product-card');
+    addToCart(this.dataset.name, this.dataset.price, selColor(card), selSize(card), this.dataset.bg);
+    this.textContent = 'Agregado ✓';
+    setTimeout(() => this.textContent = 'Agregar', 1400);
+    openCart();
+  });
+});
+document.querySelectorAll('.product-card__sizes').forEach(g => {
+  g.querySelectorAll('.size-btn').forEach(b => b.addEventListener('click', function() {
+    if (this.disabled) return;
+    g.querySelectorAll('.size-btn').forEach(x => { x.classList.remove('active'); x.setAttribute('aria-pressed','false'); });
+    this.classList.add('active'); this.setAttribute('aria-pressed','true');
+  }));
+});
+document.querySelectorAll('.product-card__colors').forEach(g => {
+  g.querySelectorAll('.swatch').forEach(s => s.addEventListener('click', function() {
+    g.querySelectorAll('.swatch').forEach(x => { x.classList.remove('active'); x.setAttribute('aria-pressed','false'); });
+    this.classList.add('active'); this.setAttribute('aria-pressed','true');
+  }));
+});
+document.querySelectorAll('.product-card__wish').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const a = this.classList.toggle('active'); this.setAttribute('aria-pressed', a);
+    showToast(a ? 'Guardado en favoritos' : 'Eliminado de favoritos');
+  });
+});
+
+// ── CAROUSELS ─────────────────────────────────────────────────
+document.querySelectorAll('.carousel-arrow').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const track = document.getElementById(this.dataset.target);
+    const card  = track.querySelector('.product-card');
+    const w     = card ? card.offsetWidth + 16 : 260;
+    track.scrollBy({ left: this.dataset.dir === 'next' ? w : -w, behavior: 'smooth' });
+  });
+});
+
+// ── CART OPEN/CLOSE ───────────────────────────────────────────
+const openCart  = () => { document.getElementById('cart-drawer').classList.add('v'); document.getElementById('cart-drawer').setAttribute('aria-hidden','false'); document.getElementById('overlay').classList.add('v'); document.body.style.overflow='hidden'; };
+const closeCart = () => { document.getElementById('cart-drawer').classList.remove('v'); document.getElementById('cart-drawer').setAttribute('aria-hidden','true'); document.getElementById('overlay').classList.remove('v'); document.body.style.overflow=''; };
+document.querySelectorAll('.cart-btn').forEach(b => b.addEventListener('click', openCart));
+document.querySelectorAll('.cart-close').forEach(b => b.addEventListener('click', closeCart));
+
+// ── MOBILE NAV ────────────────────────────────────────────────
+const openNav  = () => { document.getElementById('mobile-nav').classList.add('v'); document.getElementById('mobile-nav').setAttribute('aria-hidden','false'); document.getElementById('overlay').classList.add('v'); document.querySelector('.mobile-menu-btn').setAttribute('aria-expanded','true'); document.body.style.overflow='hidden'; };
+const closeNav = () => { document.getElementById('mobile-nav').classList.remove('v'); document.getElementById('mobile-nav').setAttribute('aria-hidden','true'); document.getElementById('overlay').classList.remove('v'); document.querySelector('.mobile-menu-btn').setAttribute('aria-expanded','false'); document.body.style.overflow=''; };
+document.querySelector('.mobile-menu-btn').addEventListener('click', openNav);
+document.querySelector('.mobile-nav-close').addEventListener('click', closeNav);
+document.querySelectorAll('.mobile-nav a').forEach(a => a.addEventListener('click', closeNav));
+document.getElementById('overlay').addEventListener('click', () => { closeCart(); closeNav(); });
+document.addEventListener('keydown', e => { if (e.key==='Escape') { closeCart(); closeNav(); } });
+
+// ── NEWSLETTER ────────────────────────────────────────────────
+document.getElementById('nl-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const inp = document.getElementById('nl-email');
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inp.value.trim())) {
+    inp.classList.add('error'); document.getElementById('nl-error').classList.add('v'); inp.setAttribute('aria-invalid','true'); return;
+  }
+  inp.classList.remove('error'); document.getElementById('nl-error').classList.remove('v');
+  this.style.display='none'; document.getElementById('nl-ok').classList.add('v');
+});
+document.getElementById('nl-email').addEventListener('input', function() {
+  this.classList.remove('error'); document.getElementById('nl-error').classList.remove('v');
+});
+
+// ── TOAST ─────────────────────────────────────────────────────
+let toastT;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  t.classList.add('v'); clearTimeout(toastT);
+  toastT = setTimeout(() => t.classList.remove('v'), 2600);
+}
+
+renderCart();
+</script>
+
+<!-- ── GSAP ──────────────────────────────────────────────────── -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+const mm = gsap.matchMedia();
+
+mm.add('(prefers-reduced-motion: no-preference)', () => {
+
+  // ── Scroll progress bar ─────────────────────────────────────
+  gsap.to('.scroll-progress', {
+    scaleX: 1, ease: 'none',
+    scrollTrigger: { start: 'top top', end: 'bottom bottom', scrub: 0.4 }
+  });
+
+  // ── Header hide on scroll-down, reveal on scroll-up ─────────
+  const hdrTween = gsap.to('.header', {
+    yPercent: -100, duration: 0.35, ease: 'power2.inOut', paused: true
+  });
+  let lastScrollY = 0;
+  ScrollTrigger.create({
+    onUpdate() {
+      const y = window.scrollY;
+      if (y > lastScrollY && y > 120) hdrTween.play();
+      else hdrTween.reverse();
+      lastScrollY = y;
+    }
+  });
+
+  // ── Hero entrance sequence ──────────────────────────────────
+  const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+  heroTl
+    .from('.hero__eyebrow',    { y: 24, opacity: 0, duration: 0.7, delay: 0.15 })
+    .from('#hero-h1',          { y: 44, opacity: 0, duration: 1.1 }, '-=0.5')
+    .from('.hero__desc',       { y: 20, opacity: 0, duration: 0.75 }, '-=0.65')
+    .from('.hero__ctas .btn',  { y: 20, opacity: 0, stagger: 0.14, duration: 0.6 }, '-=0.5')
+    .from('.hero__photo',      { x: 50, opacity: 0, duration: 1.4, ease: 'power2.out' }, '-=1.15');
+
+  // ── Section eyebrow lines ───────────────────────────────────
+  gsap.utils.toArray('.section-eyebrow-line').forEach(line => {
+    gsap.from(line, {
+      scaleX: 0, transformOrigin: 'left center', duration: 0.55, ease: 'power2.out',
+      scrollTrigger: { trigger: line, start: 'top 89%' }
+    });
+  });
+
+  // ── Section headings ────────────────────────────────────────
+  gsap.utils.toArray('.section-header h2').forEach(h => {
+    gsap.from(h, {
+      y: 30, opacity: 0, duration: 0.9, ease: 'power2.out',
+      scrollTrigger: { trigger: h, start: 'top 87%' }
+    });
+  });
+  gsap.utils.toArray('.section-header p').forEach(p => {
+    gsap.from(p, {
+      y: 16, opacity: 0, duration: 0.7, ease: 'power2.out',
+      scrollTrigger: { trigger: p, start: 'top 88%' }
+    });
+  });
+
+  // ── Wine divider ticker ─────────────────────────────────────
+  gsap.from('.wine-ticker', {
+    opacity: 0, duration: 0.5,
+    scrollTrigger: { trigger: '.wine-ticker', start: 'top 96%' }
+  });
+
+  // ── Collections grid ────────────────────────────────────────
+  ScrollTrigger.batch('.coll-card', {
+    onEnter: els => gsap.from(els, {
+      y: 64, opacity: 0, duration: 0.95, stagger: 0.13, ease: 'power2.out'
+    }),
+    start: 'top 90%', once: true
+  });
+
+  // ── Carousel headers ────────────────────────────────────────
+  gsap.utils.toArray('.carousel-header').forEach(h => {
+    gsap.from(h, {
+      x: -24, opacity: 0, duration: 0.7, ease: 'power2.out',
+      scrollTrigger: { trigger: h, start: 'top 91%' }
+    });
+  });
+
+  // ── Product cards batch reveal ──────────────────────────────
+  ScrollTrigger.batch('.product-card', {
+    onEnter: els => gsap.from(els, {
+      y: 40, opacity: 0, duration: 0.72, stagger: 0.09, ease: 'power2.out'
+    }),
+    start: 'top 93%', once: true
+  });
+
+  // ── Product card 3D tilt (QuickTo for 60 fps) ───────────────
+  document.querySelectorAll('.product-card').forEach(card => {
+    gsap.set(card, { transformPerspective: 900 });
+    const rx = gsap.quickTo(card, 'rotationX', { duration: 0.45, ease: 'power1.out' });
+    const ry = gsap.quickTo(card, 'rotationY', { duration: 0.45, ease: 'power1.out' });
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      rx(((e.clientY - r.top)  / r.height - 0.5) * -9);
+      ry(((e.clientX - r.left) / r.width  - 0.5) *  9);
+    });
+    card.addEventListener('mouseleave', () => { rx(0); ry(0); });
+  });
+
+  // ── Carousel arrow magnetic hover ───────────────────────────
+  document.querySelectorAll('.carousel-arrow').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const r = btn.getBoundingClientRect();
+      gsap.to(btn, {
+        x: (e.clientX - r.left - r.width  / 2) * 0.38,
+        y: (e.clientY - r.top  - r.height / 2) * 0.38,
+        duration: 0.25, ease: 'power2.out', overwrite: 'auto'
+      });
+    });
+    btn.addEventListener('mouseleave', () => {
+      gsap.to(btn, { x: 0, y: 0, duration: 0.55, ease: 'elastic.out(1, 0.45)', overwrite: 'auto' });
+    });
+  });
+
+  // ── Lookbook items ──────────────────────────────────────────
+  ScrollTrigger.batch('.lookbook__item', {
+    onEnter: els => gsap.from(els, {
+      y: 52, opacity: 0, scale: 0.97, duration: 1.0, stagger: 0.13, ease: 'power2.out',
+      clearProps: 'scale'
+    }),
+    start: 'top 90%', once: true
+  });
+
+  // ── Features ────────────────────────────────────────────────
+  ScrollTrigger.batch('.feature', {
+    onEnter: els => gsap.from(els, {
+      y: 28, opacity: 0, duration: 0.7, stagger: 0.12, ease: 'power2.out'
+    }),
+    start: 'top 91%', once: true
+  });
+
+  gsap.utils.toArray('.feature__icon').forEach((icon, i) => {
+    gsap.from(icon, {
+      scale: 0.5, rotation: -18, opacity: 0, duration: 0.65, ease: 'back.out(2)',
+      scrollTrigger: { trigger: icon, start: 'top 91%' },
+      delay: i * 0.08
+    });
+  });
+
+  // ── Newsletter ───────────────────────────────────────────────
+  gsap.from('.newsletter__inner', {
+    y: 32, opacity: 0, duration: 1.0, ease: 'power2.out',
+    scrollTrigger: { trigger: '.newsletter', start: 'top 86%' }
+  });
+
+  // ── Footer columns ───────────────────────────────────────────
+  ScrollTrigger.batch('.footer__grid > div', {
+    onEnter: els => gsap.from(els, {
+      y: 22, opacity: 0, duration: 0.65, stagger: 0.1, ease: 'power2.out'
+    }),
+    start: 'top 97%', once: true
+  });
+
+  // ── Logo subtle entrance ─────────────────────────────────────
+  gsap.from('.header .logo', {
+    opacity: 0, duration: 0.6, ease: 'power2.out', delay: 0.1
+  });
+
+});
+</script>
+</body>
+</html>
