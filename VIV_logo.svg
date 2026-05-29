@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="1080" height="1080">
+  <rect width="1080" height="1080" fill="white"/>
+  <text
+    x="540"
+    y="620"
+    font-family="Georgia, 'Times New Roman', Times, serif"
+    font-size="420"
+    font-weight="normal"
+    fill="black"
+    text-anchor="middle"
+    letter-spacing="-10"
+  >V/IV</text>
+</svg>

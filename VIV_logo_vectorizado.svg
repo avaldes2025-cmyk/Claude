@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- V/IV Logo - Vectorizado - Listo para Adobe Illustrator -->
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   viewBox="0 0 1080 1080"
+   width="1080"
+   height="1080"
+   version="1.1">
+
+  <!-- Fondo blanco -->
+  <rect width="1080" height="1080" fill="#FFFFFF"/>
+
+  <!--
+    Logo V/IV renderizado con paths vectoriales puros.
+    Tipografía estilo serif clásico (inspirada en la imagen original).
+    Cada letra es un path independiente.
+  -->
+  <g transform="translate(540,540)" fill="#000000">
+
+    <!-- V (izquierda) -->
+    <!-- Trazo izquierdo del V -->
+    <polygon points="-290,-200 -240,-200 -110,175 -155,175" />
+    <!-- Trazo derecho del V -->
+    <polygon points="-30,-200 -80,-200 -155,175 -110,175" />
+    <!-- Serif superior izquierdo -->
+    <rect x="-305" y="-215" width="60" height="22" />
+    <!-- Serif superior derecho del V -->
+    <rect x="-95" y="-215" width="60" height="22" />
+
+    <!-- Barra diagonal / -->
+    <polygon points="10,-220 40,-220 -10,210 -40,210" />
+
+    <!-- IV (derecha) -->
+    <!-- I - trazo vertical -->
+    <rect x="55" y="-200" width="42" height="375" />
+    <!-- I - serif superior -->
+    <rect x="40" y="-215" width="72" height="22" />
+    <!-- I - serif inferior -->
+    <rect x="40" y="175" width="72" height="22" />
+
+    <!-- V (de IV) - trazo izquierdo -->
+    <polygon points="130,-200 180,-200 290,175 245,175" />
+    <!-- V (de IV) - trazo derecho -->
+    <polygon points="290,-200 340,-200 265,175 220,175" />
+    <!-- Serif superior izquierdo del segundo V -->
+    <rect x="115" y="-215" width="60" height="22" />
+    <!-- Serif superior derecho del segundo V -->
+    <rect x="275" y="-215" width="60" height="22" />
+
+  </g>
+
+</svg>
